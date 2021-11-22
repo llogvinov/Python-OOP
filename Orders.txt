@@ -1,0 +1,28 @@
+20/11/2021 15:03:15
+Added: Barbecue
+Price: 400
+
+20/11/2021 15:03:20
+Added: Pepperoni
+Price: 250
+
+20/11/2021 15:03:24
+Added: Tea
+Price: 55
+
+20/11/2021 15:03:49
+Deleted: Pepperoni
+Price: 250
+
+20/11/2021 15:07:10
+Added: Barbecue
+Price: 400
+
+20/11/2021 15:07:14
+Added: Seafood
+Price: 450
+
+20/11/2021 15:07:17
+Added: Pepsi
+Price: 80
+
