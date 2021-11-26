@@ -1,4 +1,5 @@
 import json
+from tkinter import *
 from Order import Order
 
 class Terminal:
@@ -14,32 +15,31 @@ class Terminal:
         return "To see the menu invoke show_menu()"
 
     # method to print menu 
-    def show_menu(self):
-        print("\n------MENU------\n")
+    def show_menu_on_form(self, form):
+        l_title = Label(form, text="MENU", font=("Verdana", 30), padx=10, pady=10)
+        l_title.grid(column=1,row=0)
 
-        for i in self.pizzas_list:
-            print("Name: {}".format(i["name"]))
-            print("Price: {}".format(i["price"]))
-            print("Sauces: {}".format(", ".join(str(x) for x in i["sauces"])))
-            print("Ingredients: {}".format(", ".join(str(x) for x in i["filling"])))
-            print("\n")
+        for count, pizza in enumerate(self.pizzas_list):
+            s = ""
+            s += pizza["name"] + "\n"
+            s += str(pizza["price"]) + "\n"
+            s += ", ".join(str(x) for x in pizza["sauces"]) + "\n"
+            s += ", ".join(str(x) for x in pizza["filling"]) + "\n"
+            l_pizza = Label(form, text=s, font=("Verdana", 15), padx=10, pady=10)
+            l_pizza.grid(column=count,row=2)
 
-        for i in self.drinks_list:
-            print("Name: {}".format(i["name"]))
-            print("Price: {}".format(i["price"]))
-            print("Size: {}".format(i["size"]))
-            print("\n")
+        for count, drink in enumerate(self.drinks_list):
+            s = ""
+            s += drink["name"] + "\n"
+            s += str(drink["price"]) + "\n"
+            s += str(drink["size"]) + "\n"
+            l_drink = Label(form, text=s, font=("Verdana", 15), padx=10, pady=10)
+            l_drink.grid(column=count,row=3)
 
-        print("----------------\n")
+        b_new_order = Button(form, text="Make a new order", font=("Verdana", 12), bg="black", fg="white")
+        b_new_order.bind('<Button-1>', self.make_new_order)
+        b_new_order.grid(column=1, row=5)
 
-    def get_player_input(self):
-        while True:
-            choice = input("Do you want to make a new order? y/n\n")
-    
-            if choice == 'n':
-                return
-            elif choice == 'y':
-                o1 = Order()
-                o1.get_order(self)
-            else:
-                raise ValueError
+    def make_new_order(self, event):
+        o1 = Order()
+        o1.get_order(self)

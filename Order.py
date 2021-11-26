@@ -1,7 +1,5 @@
 from datetime import datetime
 from threading import Thread
-import threading
-from types import prepare_class
 from Pizza import Pizza
 from Drink import Drink
 from Product import Product
@@ -140,10 +138,6 @@ class Order:
             return 202
         elif drink_id == 's':
             return 203
-        elif drink_id == 't':
-            return 204
-        elif drink_id == 'c':
-            return 205
         else:
             raise ValueError
 

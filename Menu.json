@@ -40,18 +40,6 @@
             "name": "Sprite",
             "price": 80,
             "size": 0.5
-        },
-        {
-            "id": 204,
-            "name": "Tea",
-            "price": 55,
-            "size": 0.2
-        },
-        {
-            "id": 205,
-            "name": "Coffee",
-            "price": 60,
-            "size": 0.2
         }
     ]
 }
