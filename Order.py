@@ -1,5 +1,6 @@
 from datetime import datetime
 from threading import Thread
+from tkinter import *
 from Pizza import Pizza
 from Drink import Drink
 from Product import Product
@@ -98,6 +99,23 @@ class Order:
         print("Ordered positions: {}".format(", ".join((x).name for x in self.ordered_products)))
         print("Final price is: {}\n".format(self.price))
 
+    def get_new_order(self, terminal):
+        get_order_form = Tk()
+        get_order_form.title("Make an order")
+        get_order_form.geometry("600x450")
+
+        l_pizza = Label(get_order_form, text="Add Pizza", font=("Verdana", 20), padx=10, pady=10)
+        l_pizza.grid(column=2,row=1)
+        for count, pizza in enumerate(terminal.pizzas_list):
+            b_pizza = Button(get_order_form, text=pizza["name"], font=("Verdana", 12))
+            b_pizza.grid(column=count,row=2)
+
+        l_drink = Label(get_order_form, text="Add Drink", font=("Verdana", 20), padx=10, pady=10)
+        l_drink.grid(column=2,row=4)
+        for count, drink in enumerate(terminal.drinks_list):
+            b_drink = Button(get_order_form, text=drink["name"], font=("Verdana", 12))
+            b_drink.grid(column=count,row=5)
+    
     def get_order(self, terminal):
         while True:
             product = input("Do you want to add pizza or drink? p/d\nType e to end your order\n")
@@ -130,7 +148,7 @@ class Order:
             raise ValueError
 
     def choose_drink(self) -> int:
-        drink_id = input("Select Drink.. p/f/s/t/c\n")
+        drink_id = input("Select Drink.. p/f/s\n")
 
         if drink_id == 'p':
             return 201

@@ -12,10 +12,4 @@ except:
     print("Unknown error")
 """
 
-form = Tk()
-form.title("Welcom to our Pizza Cafe!")
-form.geometry("600x450")
-
-t.show_menu_on_form(form)
-
-form.mainloop()
+t.show_menu_on_form()
