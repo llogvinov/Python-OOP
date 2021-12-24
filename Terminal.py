@@ -2,7 +2,19 @@ import json
 from tkinter import *
 from Order import Order
 
-class Terminal:
+
+# SINGLETON PATTERN
+class SingletonBaseClass(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(SingletonBaseClass, cls).\
+                __call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class Terminal(metaclass=SingletonBaseClass):
     
     def __init__(self):
         with open('Menu.json', 'r') as menu_json:

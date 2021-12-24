@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Product(ABC):
 
     def __init__(self, terminal, id):
@@ -39,7 +40,17 @@ class Product(ABC):
         else:
             raise ValueError
 
+    # TEMPLATE PATTERN
+    def prepare_self(self):
+        self.print_information()
+        self.start_preparing()
+
     # abstract method that overrides in Pizza and Drink classes
     @abstractmethod
-    async def prepare_self(self):
+    def print_information(self):
+        pass
+
+    # abstract method that overrides in Pizza and Drink classes
+    @abstractmethod
+    def start_preparing(self):
         pass

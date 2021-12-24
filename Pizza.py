@@ -1,5 +1,6 @@
 from Product import Product
-import asyncio
+from time import sleep
+
 
 # mixin class for products that can be baked (pizza, pie, ..)
 class BakingMixin:
@@ -28,19 +29,22 @@ class Pizza(Product, BakingMixin):
         print("Filling: {}".format(", ".join(str(x) for x in self.filling)))
 
     # abstract method
-    async def prepare_self(self):
+    def print_information(self):
         print("Start prepearing {} pizza...".format(self.name))
-        await asyncio.sleep(0.5)
+        sleep(0.5)
+
+    # abstract method
+    def start_preparing(self):
         self._knead_dough()
-        await asyncio.sleep(0.5)
+        sleep(0.5)
         self._collect_ingredients(self.filling)
-        await asyncio.sleep(1.5)
+        sleep(1.5)
         self.bake_food(220)
-        await asyncio.sleep(2)
+        sleep(2)
         self._cut()
-        await asyncio.sleep(0.5)
+        sleep(0.5)
         self._pack()
-        await asyncio.sleep(0.5)
+        sleep(0.5)
         print('\n')
 
     def _knead_dough(self):

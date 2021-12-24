@@ -4,7 +4,7 @@ from tkinter import *
 from Pizza import Pizza
 from Drink import Drink
 from Product import Product
-import asyncio
+
 
 # decorator method
 # writes data in text file
@@ -48,10 +48,19 @@ class Order:
         self.add_product(product)
         self.add_price(product)
 
-    # async
-    def prepare_order(self):
+    # threads
+    def prepare_order(self, get_order_form, order_form):
+        get_order_form.destroy()
+        order_form.destroy()
+
+        threads = []
         for product in self.ordered_products:
-            asyncio.run(product.prepare_self())
+            new_thread = Thread(target=product.prepare_self())
+            threads.append(new_thread)
+            new_thread.start()
+
+        for thread in threads:
+            thread.join()
 
     def add_product(self, product):
         self.ordered_products.append(product)
@@ -99,7 +108,7 @@ class Order:
         get_order_form.title("Make an order")
         get_order_form.geometry("600x450")
 
-        positions_form = self.positions_UI()
+        positions_form = self.positions_UI(get_order_form)
 
         l_pizza = Label(get_order_form, text="Add Pizza", font=("Verdana", 20), padx=10, pady=10)
         l_pizza.grid(column=2,row=1)
@@ -119,96 +128,23 @@ class Order:
 
         get_order_form.mainloop()
 
-    def positions_UI(self):
+    def positions_UI(self, get_order_form):
         form = Tk()
         form.title("Order list")
         form.geometry("600x450")
+
+        conf_button = Button(form, text="Confirm and Pay", font=("Verdana", 12))
+        del_last_button = Button(form, text="Delete Last Product", font=("Verdana", 12))
+
+        conf_button.bind('<Button-1>', 
+                        lambda event, : self.prepare_order(get_order_form, form))
+
+        conf_button.grid()
+        del_last_button.grid()
+
         return form
 
     def add_position_UI(self, form, product):
         self.add_position(product)        
         label = Label(form, text=product.name + " - " + str(product.price) + "rub.")
         label.grid()
-
-    def get_order(self, terminal):
-        while True:
-            product = input("Do you want to add pizza or drink? p/d\nType e to end your order\n")
-
-            if product == 'p':
-                id = self.choose_pizza()
-                p1 = Pizza(terminal, id)
-                self.add_position(p1)
-            elif product == 'd':
-                id = self.choose_drink()
-                d1 = Drink(terminal, id)
-                self.add_position(d1)
-            elif product == 'e':
-                print("\n")
-                self.check_order(terminal)
-                return
-            else:
-                raise ValueError
-
-    def choose_pizza(self) -> int:
-        pizza_id = input("Select Pizza.. p/b/s\n")
-
-        if pizza_id == 'p':
-            return 101
-        elif pizza_id == 'b':
-            return 102
-        elif pizza_id == 's':
-            return 103
-        else:
-            raise ValueError
-
-    def choose_drink(self) -> int:
-        drink_id = input("Select Drink.. p/f/s\n")
-
-        if drink_id == 'p':
-            return 201
-        elif drink_id == 'f':
-            return 202
-        elif drink_id == 's':
-            return 203
-        else:
-            raise ValueError
-
-    # prints infprmation about an order
-    # asks customer if hi/she wants to edit an order
-    def check_order(self, terminal):
-        self.show_order()
-        choice = input("Do you want to edit your order? y/n\n")
-    
-        if choice == 'n':
-            self.confirm_order(terminal)
-        elif choice == 'y':
-            self.edit_order(terminal)
-        else:
-            raise ValueError
-
-    def confirm_order(self, terminal):
-        choice = input("Confirm and pay your order. y/n\n")
-
-        if choice == 'n':
-            self.edit_order(terminal)
-        elif choice == 'y':
-            self.prepare_order()
-        else:
-            raise ValueError
-
-    def edit_order(self, terminal):
-        choice = input("Do you want to add/delete last/delete by number any product? a/l/n\nType e to end editting your order\n")
-
-        if choice == 'a':
-            self.get_order(terminal)
-        elif choice == 'l':
-            self.delete_last_product()
-            self.check_order(terminal)
-        elif choice == 'n':
-            self.delete_product(int(input("Type product number in your order\n")))
-            self.check_order(terminal)
-        elif choice == 'e':
-            self.show_order()
-            self.prepare_order()
-        else:
-            raise ValueError

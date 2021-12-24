@@ -1,5 +1,6 @@
 from Product import Product
-import asyncio
+from time import sleep
+
 
 class Drink(Product):
     
@@ -19,10 +20,15 @@ class Drink(Product):
         super().show_information()
         print("Size {}".format(self.size))
 
-    # abstract method
-    async def prepare_self(self):
+    def print_information(self):
+        print("Start preparing {} drink...".format(self.name))
+        sleep(0.5)
+
+    def start_preparing(self):
+        self.pour()
+        sleep(1)
+
+    def pour(self):
         print("Pouring {}...".format(self.name))
-        await asyncio.sleep(1)
-        print('\n')
 
     
