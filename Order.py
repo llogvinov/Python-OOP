@@ -4,7 +4,7 @@ from tkinter import *
 from Pizza import Pizza
 from Drink import Drink
 from Product import Product
-
+import asyncio
 
 # decorator method
 # writes data in text file
@@ -48,15 +48,10 @@ class Order:
         self.add_product(product)
         self.add_price(product)
 
+    # async
     def prepare_order(self):
-        threads = []
         for product in self.ordered_products:
-            new_thread = Thread(target=product.prepare_self())
-            threads.append(new_thread)
-            new_thread.start()
-        
-        for thread in threads:
-            thread.join()
+            asyncio.run(product.prepare_self())
 
     def add_product(self, product):
         self.ordered_products.append(product)
@@ -104,18 +99,37 @@ class Order:
         get_order_form.title("Make an order")
         get_order_form.geometry("600x450")
 
+        positions_form = self.positions_UI()
+
         l_pizza = Label(get_order_form, text="Add Pizza", font=("Verdana", 20), padx=10, pady=10)
         l_pizza.grid(column=2,row=1)
         for count, pizza in enumerate(terminal.pizzas_list):
             b_pizza = Button(get_order_form, text=pizza["name"], font=("Verdana", 12))
+            b_pizza.bind('<Button-1>', 
+                        lambda event, p=Pizza(terminal, 101+count): self.add_position_UI(positions_form, p))
             b_pizza.grid(column=count,row=2)
 
         l_drink = Label(get_order_form, text="Add Drink", font=("Verdana", 20), padx=10, pady=10)
         l_drink.grid(column=2,row=4)
         for count, drink in enumerate(terminal.drinks_list):
             b_drink = Button(get_order_form, text=drink["name"], font=("Verdana", 12))
+            b_drink.bind('<Button-1>', 
+                        lambda event, d=Drink(terminal, 201+count): self.add_position_UI(positions_form, d))
             b_drink.grid(column=count,row=5)
-    
+
+        get_order_form.mainloop()
+
+    def positions_UI(self):
+        form = Tk()
+        form.title("Order list")
+        form.geometry("600x450")
+        return form
+
+    def add_position_UI(self, form, product):
+        self.add_position(product)        
+        label = Label(form, text=product.name + " - " + str(product.price) + "rub.")
+        label.grid()
+
     def get_order(self, terminal):
         while True:
             product = input("Do you want to add pizza or drink? p/d\nType e to end your order\n")

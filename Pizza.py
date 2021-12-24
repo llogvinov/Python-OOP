@@ -1,13 +1,11 @@
-from threading import Thread
-from time import sleep
 from Product import Product
+import asyncio
 
 # mixin class for products that can be baked (pizza, pie, ..)
 class BakingMixin:
     
     def bake_food(self, temp):
         print("Bake at a tempreture {} degrees".format(temp))
-
 
 class Pizza(Product, BakingMixin):
     
@@ -30,22 +28,19 @@ class Pizza(Product, BakingMixin):
         print("Filling: {}".format(", ".join(str(x) for x in self.filling)))
 
     # abstract method
-    def prepare_self(self):
-        print("New thread: starting")
-        sleep(1)
+    async def prepare_self(self):
         print("Start prepearing {} pizza...".format(self.name))
-        sleep(0.5)
+        await asyncio.sleep(0.5)
         self._knead_dough()
-        sleep(0.5)
+        await asyncio.sleep(0.5)
         self._collect_ingredients(self.filling)
-        sleep(1.5)
+        await asyncio.sleep(1.5)
         self.bake_food(220)
-        sleep(2)
+        await asyncio.sleep(2)
         self._cut()
-        sleep(0.5)
+        await asyncio.sleep(0.5)
         self._pack()
-        sleep(0.5)
-        print("New thread: finishing")
+        await asyncio.sleep(0.5)
         print('\n')
 
     def _knead_dough(self):

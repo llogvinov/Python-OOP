@@ -1,6 +1,5 @@
-
-from time import sleep
 from Product import Product
+import asyncio
 
 class Drink(Product):
     
@@ -21,12 +20,9 @@ class Drink(Product):
         print("Size {}".format(self.size))
 
     # abstract method
-    def prepare_self(self):
-        print("New thread: starting")
-        sleep(1)
+    async def prepare_self(self):
         print("Pouring {}...".format(self.name))
-        sleep(0.5)
-        print("New thread: finishing")
+        await asyncio.sleep(1)
         print('\n')
 
     

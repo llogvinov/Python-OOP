@@ -42,3 +42,103 @@ Price: 80
 Added: Seafood
 Price: 450
 
+18/12/2021 16:22:49
+Added: Pepperoni
+Price: 250
+
+18/12/2021 16:23:07
+Added: Sprite
+Price: 80
+
+18/12/2021 16:23:09
+Added: Fanta
+Price: 80
+
+18/12/2021 16:25:59
+Added: Pepperoni
+Price: 250
+
+18/12/2021 16:28:06
+Added: Pepperoni
+Price: 250
+
+18/12/2021 16:31:45
+Added: Barbecue
+Price: 400
+
+18/12/2021 16:41:01
+Added: Seafood
+Price: 450
+
+18/12/2021 16:56:06
+Added: Pepperoni
+Price: 250
+
+18/12/2021 16:56:14
+Added: Fanta
+Price: 80
+
+18/12/2021 16:56:16
+Added: Seafood
+Price: 450
+
+18/12/2021 16:56:17
+Added: Barbecue
+Price: 400
+
+18/12/2021 17:06:55
+Added: Pepperoni
+Price: 250
+
+18/12/2021 17:07:39
+Added: Pepperoni
+Price: 250
+
+18/12/2021 17:07:41
+Added: Seafood
+Price: 450
+
+18/12/2021 17:10:19
+Added: Barbecue
+Price: 400
+
+18/12/2021 17:10:23
+Added: Fanta
+Price: 80
+
+18/12/2021 17:10:24
+Added: Seafood
+Price: 450
+
+18/12/2021 17:10:33
+Added: Barbecue
+Price: 400
+
+18/12/2021 17:10:34
+Added: Fanta
+Price: 80
+
+18/12/2021 17:10:35
+Added: Fanta
+Price: 80
+
+23/12/2021 16:23:36
+Added: Pepperoni
+Price: 250
+
+23/12/2021 16:23:39
+Added: Sprite
+Price: 80
+
+23/12/2021 16:23:40
+Added: Seafood
+Price: 450
+
+23/12/2021 16:23:51
+Added: Pepsi
+Price: 80
+
+23/12/2021 16:23:53
+Added: Pepperoni
+Price: 250
+

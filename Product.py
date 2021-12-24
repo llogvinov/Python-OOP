@@ -41,5 +41,5 @@ class Product(ABC):
 
     # abstract method that overrides in Pizza and Drink classes
     @abstractmethod
-    def prepare_self(self):
+    async def prepare_self(self):
         pass
