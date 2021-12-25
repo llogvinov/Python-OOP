@@ -6,6 +6,7 @@ from Drink import Drink
 from Product import Product
 
 
+# DECORATOR PATTERN
 # decorator method
 # writes data in text file
 def write_added_position_to_file(method_to_decorate):
@@ -22,6 +23,8 @@ def write_added_position_to_file(method_to_decorate):
         return method_to_decorate(self, product)
     return write_added_position
 
+# decorator method
+# writes data in text file
 def write_deleted_position_to_file(method_to_decorate):
     def write_deleted_position(self, product):
         if not (isinstance(product, Product)):
@@ -36,17 +39,19 @@ def write_deleted_position_to_file(method_to_decorate):
         return method_to_decorate(self, product)
     return write_deleted_position
 
+
 class Order:
-    
     def __init__(self):
         self.ordered_products = []
         self.price = 0
+
 
     # add product and its price to order
     @write_added_position_to_file
     def add_position(self, product):
         self.add_product(product)
         self.add_price(product)
+
 
     # threads
     def prepare_order(self, get_order_form, order_form):
@@ -62,20 +67,24 @@ class Order:
         for thread in threads:
             thread.join()
 
+
     def add_product(self, product):
         self.ordered_products.append(product)
+
 
     @write_deleted_position_to_file
     def delete_position(self, product):
         pass
 
-    def delete_last_product(self):
+
+    def delete_last_product(self, event):
         try:
             self.delete_position(self.ordered_products[-1])
             self.subtract_price(self.ordered_products[-1])
             self.ordered_products.pop(-1)
         except:
             print("Nothing to delete - the order is empty")
+
 
     # delete product by its number in order list
     def delete_product(self, number):
@@ -86,8 +95,10 @@ class Order:
         except:
             print("Invalid product number in order list")
 
+
     def add_price(self, product):
         self.price += product.price
+
 
     def subtract_price(self, product):
         self.price -= product.price
@@ -95,13 +106,16 @@ class Order:
         if (self.price < 0):
             raise ValueError
 
+
     def clear_order(self):
         self.ordered_products.clear()
+
 
     # print information about an order
     def show_order(self):
         print("Ordered positions: {}".format(", ".join((x).name for x in self.ordered_products)))
         print("Final price is: {}\n".format(self.price))
+
 
     def get_new_order(self, terminal):
         get_order_form = Tk()
@@ -128,6 +142,7 @@ class Order:
 
         get_order_form.mainloop()
 
+
     def positions_UI(self, get_order_form):
         form = Tk()
         form.title("Order list")
@@ -136,13 +151,14 @@ class Order:
         conf_button = Button(form, text="Confirm and Pay", font=("Verdana", 12))
         del_last_button = Button(form, text="Delete Last Product", font=("Verdana", 12))
 
-        conf_button.bind('<Button-1>', 
-                        lambda event, : self.prepare_order(get_order_form, form))
+        conf_button.bind('<Button-1>', lambda event, : self.prepare_order(get_order_form, form))
+        del_last_button.bind('<Button-1>', self.delete_last_product)
 
         conf_button.grid()
         del_last_button.grid()
 
         return form
+
 
     def add_position_UI(self, form, product):
         self.add_position(product)        

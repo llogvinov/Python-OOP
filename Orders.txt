@@ -222,3 +222,27 @@ Price: 400
 Added: Pepsi
 Price: 80
 
+25/12/2021 15:43:03
+Added: Pepperoni
+Price: 250
+
+25/12/2021 15:43:07
+Added: Fanta
+Price: 80
+
+25/12/2021 15:43:08
+Added: Seafood
+Price: 450
+
+25/12/2021 15:45:35
+Added: Pepperoni
+Price: 250
+
+25/12/2021 15:45:37
+Added: Fanta
+Price: 80
+
+25/12/2021 15:45:38
+Added: Barbecue
+Price: 400
+

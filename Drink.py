@@ -13,12 +13,12 @@ class Drink(Product):
     # set base and additional information
     def set_information(self, product_tuple):
         super().set_information(product_tuple)
-        self.size = product_tuple["size"]
+        # self.size = product_tuple["size"]
     
     # show base and additional information
     def show_information(self):
         super().show_information()
-        print("Size {}".format(self.size))
+        # print("Size {}".format(self.size))
 
     def print_information(self):
         print("Start preparing {} drink...".format(self.name))

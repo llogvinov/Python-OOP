@@ -1,6 +1,7 @@
 import json
 from tkinter import *
 from Order import Order
+from DB import *
 
 
 # SINGLETON PATTERN
@@ -15,16 +16,43 @@ class SingletonBaseClass(type):
 
 
 class Terminal(metaclass=SingletonBaseClass):
-    
     def __init__(self):
-        with open('Menu.json', 'r') as menu_json:
-            json_data = json.load(menu_json)
+        self.read_from_db()
         
-        self.pizzas_list = json_data["pizzas"]
-        self.drinks_list = json_data["drinks"]
+        # with open('Menu.json', 'r') as menu_json:
+        #     json_data = json.load(menu_json)
+        
+        # self.pizzas_list = json_data["pizzas"]
+        # self.drinks_list = json_data["drinks"]
+
+
+    def read_from_db(self):
+        connection = create_connection(PATH)
+        pizzas = execute_read_query(connection, select_pizzas)
+        drinks = execute_read_query(connection, select_drinks)
+
+        self.pizzas_list = []
+        for pizza in pizzas:
+            self.pizzas_list.append({
+                "id" : pizza[0],
+                "name": pizza[1],
+                "price": pizza[2],
+                "sauces": pizza[3],
+                "filling": pizza[4]
+            })
+
+        self.drinks_list = []
+        for drink in drinks:
+            self.drinks_list.append({
+                "id" : drink[0],
+                "name": drink[1],
+                "price": drink[2]
+            })
+
 
     def __str__(self) -> str:
         return "To see the menu invoke show_menu()"
+
 
     # method to print menu 
     def show_menu_on_form(self):
@@ -39,8 +67,8 @@ class Terminal(metaclass=SingletonBaseClass):
             s = ""
             s += pizza["name"] + "\n"
             s += str(pizza["price"]) + "\n"
-            s += ", ".join(str(x) for x in pizza["sauces"]) + "\n"
-            s += ", ".join(str(x) for x in pizza["filling"]) + "\n"
+            s += pizza["sauces"] + "\n"
+            s += pizza["filling"] + "\n"
             l_pizza = Label(menu_form, text=s, font=("Verdana", 15), padx=10, pady=10)
             l_pizza.grid(column=count,row=2)
 
@@ -48,7 +76,6 @@ class Terminal(metaclass=SingletonBaseClass):
             s = ""
             s += drink["name"] + "\n"
             s += str(drink["price"]) + "\n"
-            s += str(drink["size"]) + "\n"
             l_drink = Label(menu_form, text=s, font=("Verdana", 15), padx=10, pady=10)
             l_drink.grid(column=count,row=3)
 
@@ -57,6 +84,7 @@ class Terminal(metaclass=SingletonBaseClass):
         b_new_order.grid(column=1, row=5)
 
         menu_form.mainloop()
+
 
     def make_new_order(self, event):
         o1 = Order()

@@ -4,36 +4,41 @@ from time import sleep
 
 # mixin class for products that can be baked (pizza, pie, ..)
 class BakingMixin:
-    
     def bake_food(self, temp):
         print("Bake at a tempreture {} degrees".format(temp))
 
+
 class Pizza(Product, BakingMixin):
-    
     def __init__(self, terminal, id):
         super().__init__(terminal, id)
+
 
     def __str__(self) -> str:
         return "Pizza class"
 
+
     # set base and additional information
     def set_information(self, product_tuple):
         super().set_information(product_tuple)
-        self.sauce = product_tuple["sauces"]
+        self.sauces = product_tuple["sauces"]
         self.filling = product_tuple["filling"]
+
 
     # show base and additional information
     def show_information(self):
         super().show_information()
-        print("Sauce: {}".format(", ".join(str(x) for x in self.sauce)))
-        print("Filling: {}".format(", ".join(str(x) for x in self.filling)))
+        print("Sauce: {}".format(self.sauces))
+        print("Filling: {}".format(self.filling))
+
 
     # abstract method
     def print_information(self):
         print("Start prepearing {} pizza...".format(self.name))
         sleep(0.5)
 
+
     # abstract method
+    # FACADE PATTERN
     def start_preparing(self):
         self._knead_dough()
         sleep(0.5)
@@ -47,16 +52,18 @@ class Pizza(Product, BakingMixin):
         sleep(0.5)
         print('\n')
 
+
     def _knead_dough(self):
         print("Knead the dough")
 
+
     def _collect_ingredients(self, filling):
-        ingredients = ", ".join(str(x) for x in filling)
-        print("Collect ingredients: {}".format(ingredients))
+        print("Collect ingredients: {}".format(filling))
+
 
     def _cut(self):
         print("Cut the pizza")
 
+
     def _pack(self):
         print("Pack the pizza: {}".format(self.name))
-
